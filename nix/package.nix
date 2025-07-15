@@ -1,38 +1,27 @@
 {
-  lib,
-  self,
   stdenv,
+  mkBunNodeModules,
   bun,
 }:
-stdenv.mkDerivation {
-  name = "scouting-system";
+stdenv.mkDerivation (finalAttrs: {
+  pname = "scouting-system-testing";
   version = "0";
 
-  src = self;
+  src = ../.;
+
+  node_modules = mkBunNodeModules { packages = import ./bun.nix; };
 
   nativeBuildInputs = [ bun ];
 
-  installPhase = ''
-    runHook preInstall
+  buildPhase = ''
+    runHook preBuild
 
-    export HOME=$(mktemp -d)
-    export BUN_INSTALL_CACHE_DIR=$(mktemp -d)
+    ln -sf ${finalAttrs.node_modules}/node_modules ./node_modules
+    ls -A
 
-    bun install \
-      --force \
-      --frozen-lockfile
+    bun run build 
+    cp -r dest $out/dest
 
-    bun run build -- --outDir "$out/build"
-
-    ls $out
-    mkdir -p $out/bin
-    cp -R ./* $out
-    makeBinaryWrapper ${lib.getExe bun} $out/bin/scouting-system \
-      --prefix PATH : ${lib.makeBinPath [ bun ]} \
-      --add-flags "run --prefer-offline --no-install --cwd $out ./bun.js"
-
-    runHook postInstall
+    runHook postBuild
   '';
-
-  meta.mainProgram = "scouting-system";
-}
+})

@@ -1,14 +1,25 @@
-{ self, ... }:
+{ inputs, ... }:
 {
-  imports = [ ./formatter.nix ];
+  imports = [
+    ./server
+    ./formatter.nix
+    ./dev-shell.nix
+  ];
 
   perSystem =
-    { pkgs, config, ... }:
+    {
+      pkgs,
+      system,
+      config,
+      ...
+    }:
     {
       # Build all packages with 'nix flake check' instead of only verifying they
       # are derivations.
       checks = config.packages;
 
-      packages.default = pkgs.callPackage ./package.nix { inherit self; };
+      packages.default = pkgs.callPackage ./package.nix {
+        inherit (inputs.bun2nix.lib.${system}) mkBunNodeModules;
+      };
     };
 }
