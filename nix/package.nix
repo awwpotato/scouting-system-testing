@@ -10,6 +10,8 @@ stdenv.mkDerivation {
 
   src = self;
 
+  nativeBuildInputs = [ bun ];
+
   installPhase = ''
     runHook preInstall
 
