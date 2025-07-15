@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: cachix/install-nix-action@v35
+      - uses: cachix/install-nix-action@v31
 
       - name: Flake Check
         run: nix flake check
