@@ -1,6 +1,8 @@
 {
+  lib,
   stdenv,
   mkBunNodeModules,
+  makeBinaryWrapper,
   bun,
 }:
 stdenv.mkDerivation (finalAttrs: {
@@ -11,16 +13,25 @@ stdenv.mkDerivation (finalAttrs: {
 
   node_modules = mkBunNodeModules { packages = import ./bun.nix; };
 
-  nativeBuildInputs = [ bun ];
+  nativeBuildInputs = [
+    makeBinaryWrapper
+    bun
+  ];
 
   buildPhase = ''
     runHook preBuild
 
     ln -sf ${finalAttrs.node_modules}/node_modules ./node_modules
-    ls -A
 
-    bun run build 
-    cp -r dest $out/dest
+    bun run build
+
+    mkdir "$out"
+    cp -r build "$out/build"
+    ln -sf ${finalAttrs.node_modules}/node_modules "$out/node_modules"
+
+    makeBinaryWrapper ${lib.getExe bun} "$out/bin/scouting-system" \
+      --prefix PATH : ${lib.makeBinPath [ bun ]} \
+      --add-flags "run --prefer-offline --no-install --cwd $out $out/build/index.js"
 
     runHook postBuild
   '';
