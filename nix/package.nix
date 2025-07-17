@@ -35,4 +35,6 @@ stdenv.mkDerivation (finalAttrs: {
 
     runHook postBuild
   '';
+
+  meta.mainProgram = "scouting-system";
 })
