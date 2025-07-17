@@ -5,8 +5,8 @@
       formatter = pkgs.treefmt.withConfig {
         runtimeInputs = with pkgs; [
           nixfmt-rfc-style
-          prettier
-          eslint
+          # prettier
+          # eslint
         ];
 
         settings = {
@@ -18,17 +18,17 @@
               command = "nixfmt";
               includes = [ "*.nix" ];
             };
-            prettier = {
-              command = "prettier";
-              includes = [
-                "*.html"
-                "*.css"
-                "*.js"
-                "*.ts"
-                "*.svelte"
-                "*.json"
-              ];
-            };
+            # prettier = {
+            #   command = "prettier";
+            #   includes = [
+            #     "*.html"
+            #     "*.css"
+            #     "*.js"
+            #     "*.ts"
+            #     "*.svelte"
+            #     "*.json"
+            #   ];
+            # };
             #   eslint = {
             #     command = "eslint";
             #     includes = [
