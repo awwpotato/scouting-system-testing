@@ -29,17 +29,17 @@
                 "*.json"
               ];
             };
-            eslint = {
-              command = "eslint";
-              includes = [
-                "*.html"
-                "*.css"
-                "*.js"
-                "*.ts"
-                "*.svelte"
-                "*.json"
-              ];
-            };
+            #   eslint = {
+            #     command = "eslint";
+            #     includes = [
+            #       "*.html"
+            #       "*.css"
+            #       "*.js"
+            #       "*.ts"
+            #       "*.svelte"
+            #       "*.json"
+            #     ];
+            #   };
           };
         };
       };
