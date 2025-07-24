@@ -45,7 +45,7 @@ in
       serviceConfig = {
         User = cfg.user;
         Restart = "always";
-        ExecStart = "${lib.getExe cfg.package}";
+        ExecStart = "${lib.getExe cfg.package} --port ${cfg.port}";
       };
     };
 
