@@ -18,8 +18,11 @@
       # are derivations.
       checks = config.packages;
 
-      packages.default = pkgs.callPackage ./package.nix {
-        inherit (inputs.bun2nix.lib.${system}) mkBunNodeModules;
+      packages = {
+        default = config.packages.scouting-system;
+        scouting-system = pkgs.callPackage ./package.nix {
+          inherit (inputs.bun2nix.lib.${system}) mkBunNodeModules;
+        };
       };
     };
 }
