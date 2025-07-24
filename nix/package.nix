@@ -27,10 +27,10 @@ stdenv.mkDerivation (finalAttrs: {
 
     mkdir "$out"
     cp -r build "$out/build"
-    ln -sf ${finalAttrs.node_modules}/node_modules "$out/node_modules"
+    ln -sf ${finalAttrs.node_modules}/node_modules "$out/build/node_modules"
 
     makeBinaryWrapper ${lib.getExe bun} "$out/bin/scouting-system" \
-      --add-flags "run --prefer-offline --no-install --cwd=$out" \
+      --add-flags "run --prefer-offline --no-install --cwd=$out/build" \
       --append-flag "$out/build/index.js"
 
     runHook postBuild
