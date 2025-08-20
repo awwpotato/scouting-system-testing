@@ -4,7 +4,7 @@
     {
       formatter = pkgs.treefmt.withConfig {
         runtimeInputs = with pkgs; [
-          nixfmt-rfc-style
+          nixfmt
           # prettier
           # eslint
         ];
@@ -17,6 +17,7 @@
             nixfmt = {
               command = "nixfmt";
               includes = [ "*.nix" ];
+              exclude = [ "bun.nix" ];
             };
             # prettier = {
             #   command = "prettier";

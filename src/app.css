@@ -1,1 +1,5 @@
 @import 'tailwindcss';
+
+body {
+	@apply bg-gray-950 font-sans text-gray-50 accent-fuchsia-400;
+}
